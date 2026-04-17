@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 EXPOSE 8080
-CMD ["python", "-m", "label_studio_ml", "start", ".", "--port", "8080", "--host", "0.0.0.0"]
+CMD ["python", "-m", "label_studio_ml", "start", "/app", "--port", "8080", "--host", "0.0.0.0"]
