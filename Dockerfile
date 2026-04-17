@@ -2,7 +2,6 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# System deps for OpenCV
 RUN apt-get update && apt-get install -y \
     libgl1 \
     libglib2.0-0 \
@@ -14,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 EXPOSE 8080
-CMD label-studio-ml start . --port ${PORT:-8080} --host 0.0.0.0
+CMD ["python", "-m", "label_studio_ml", "start", ".", "--port", "8080", "--host", "0.0.0.0"]
