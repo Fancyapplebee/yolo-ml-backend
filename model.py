@@ -1,4 +1,6 @@
 import os
+import requests
+import tempfile
 from label_studio_ml.model import LabelStudioMLBase
 from ultralytics import YOLO
 
@@ -9,7 +11,6 @@ class YOLOBackend(LabelStudioMLBase):
         weights_path = os.environ.get("WEIGHTS_PATH", "weights/best.pt")
         self.model = YOLO(weights_path)
 
-        # Map YOLO class names → Label Studio label names
         self.label_map = {
             'red': 'Red Alliance Robot',
             'blue': 'Blue Alliance Robot',
@@ -19,7 +20,17 @@ class YOLOBackend(LabelStudioMLBase):
         predictions = []
         for task in tasks:
             image_url = task["data"]["image"]
-            local_path = self.get_local_path(image_url, task_id=task["id"])
+
+            # Handle relative URLs
+            if image_url.startswith("/"):
+                image_url = os.environ.get("LABEL_STUDIO_URL", "").rstrip("/") + image_url
+
+            headers = {"Authorization": f"Token {os.environ.get('LABEL_STUDIO_API_KEY')}"}
+            response = requests.get(image_url, headers=headers)
+
+            with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
+                f.write(response.content)
+                local_path = f.name
 
             results = self.model(local_path)[0]
             regions = []
@@ -51,5 +62,8 @@ class YOLOBackend(LabelStudioMLBase):
                 "result": regions,
                 "score": sum(r["score"] for r in regions) / max(len(regions), 1) if regions else 0.0
             })
+
+            # Clean up temp file
+            os.unlink(local_path)
 
         return predictions

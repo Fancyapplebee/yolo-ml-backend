@@ -6,3 +6,4 @@ opencv-python-headless
 redis
 rq
 gunicorn
+tempfile
