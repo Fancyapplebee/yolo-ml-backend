@@ -19,7 +19,7 @@ class YOLOBackend(LabelStudioMLBase):
         predictions = []
         for task in tasks:
             image_url = task["data"]["image"]
-            local_path = self.get_local_path(image_url)
+            local_path = self.get_local_path(image_url, task_id=task["id"])
 
             results = self.model(local_path)[0]
             regions = []
