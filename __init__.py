@@ -1,0 +1,2 @@
+self.ls_url = os.environ.get("https://label-studio-shared-798068859905.us-west2.run.app/")
+self.ls_api_key = os.environ.get("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6ODA4MzYwNzk3NSwiaWF0IjoxNzc2NDA3OTc1LCJqdGkiOiIwZjY5YTUzYWM0ZTA0MWI4YmNkYzg2NDNmZDM2MTdlZiIsInVzZXJfaWQiOiIyIn0.5USJocz7oGywqWXxN8Bk9GujdEjrCO3-guoxmRVMK1k")

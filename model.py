@@ -11,8 +11,8 @@ class YOLOBackend(LabelStudioMLBase):
 
         # Map YOLO class names → Label Studio label names
         self.label_map = {
-            'red': 'red alliance robot',
-            'blue': 'blue alliance robot',
+            'red': 'Red Alliance Robot',
+            'blue': 'Blue Alliance Robot',
         }
 
     def predict(self, tasks, **kwargs):
