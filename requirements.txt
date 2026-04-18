@@ -3,3 +3,5 @@ ultralytics
 torch
 torchvision
 opencv-python-headless
+redis
+rq
